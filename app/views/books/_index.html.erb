@@ -1,5 +1,8 @@
 <table class='table table-hover table-inverse'>
   <thead>
+    <%= link_to "新しい順",books_path(:sort_param => 'created_at') %> |
+    <%= link_to "評価が高い順",books_path(:sort_param => 'rate') %>
+
     <tr>
       <th></th>
       <th>Title</th>
@@ -27,6 +30,7 @@
           <span id="star-rate-<%= book.id %>"></span>
 
           <script>
+          $('#star-rate-<%= book.id %>').empty();
             $('#star-rate-<%= book.id %>').raty({
               size: 36,
               starOff: '<%= asset_path('star-off.png') %>',

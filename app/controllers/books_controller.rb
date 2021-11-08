@@ -7,8 +7,10 @@ class BooksController < ApplicationController
   end
 
   def index
-    @books = Book.all
     @book = Book.new
+    #@books = Book.all
+    params[:sort_param] = %w{rate, created_at}.include?(params[:sort_param]) ? params[:sort_param] : 'rate'
+    @books = Book.all.order "#{params[:sort_param]} DESC"
   end
 
   def create
