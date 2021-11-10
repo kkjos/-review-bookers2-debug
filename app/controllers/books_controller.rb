@@ -4,6 +4,7 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @new_book = Book.new
     @comment = BookComment.new
+    impressionist(@book, nil, unique: [:ip_address])
   end
 
   def index
