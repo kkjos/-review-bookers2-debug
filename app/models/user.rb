@@ -13,6 +13,9 @@ class User < ApplicationRecord
   has_many :followers, through: :reverse_of_relationships, source: :follower
   has_many :followings, through: :relationships, source: :followed
 
+  has_many :messages, dependent: :destroy
+  has_many :entries, dependent: :destroy
+
   attachment :profile_image, destroy: false
 
   validates :name, presence: true, length: {maximum: 20, minimum: 2}, uniqueness: true
