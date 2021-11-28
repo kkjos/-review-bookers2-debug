@@ -16,7 +16,11 @@ class BooksController < ApplicationController
         b.favorited_users.includes(:favorites).where(created_at: from...to).size <=>
         a.favorited_users.includes(:favorites).where(created_at: from...to).size
       }
+
     @book = Book.new
+    #@books = Book.all
+    params[:sort_param] = %w{rate, created_at}.include?(params[:sort_param]) ? params[:sort_param] : 'rate'
+    @books = Book.all.order "#{params[:sort_param]} DESC"
   end
 
   def create
@@ -59,7 +63,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body)
+    params.require(:book).permit(:title, :body, :category, :rate)
   end
 
 end
