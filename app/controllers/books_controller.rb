@@ -4,9 +4,19 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @new_book = Book.new
     @comment = BookComment.new
+    impressionist(@book, nil, unique: [:ip_address])
   end
 
   def index
+    to = Time.current.at_end_of_day
+    from = (to - 6.day).at_beginning_of_day
+    #@books = Book.all.sort {|a,b| b.favorites.count <=> a.favorites.count}
+    @books = Book.includes(:favorited_users).
+      sort {|a,b|
+        b.favorited_users.includes(:favorites).where(created_at: from...to).size <=>
+        a.favorited_users.includes(:favorites).where(created_at: from...to).size
+      }
+
     @book = Book.new
     #@books = Book.all
     params[:sort_param] = %w{rate, created_at}.include?(params[:sort_param]) ? params[:sort_param] : 'rate'

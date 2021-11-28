@@ -17,6 +17,10 @@
       <p>コメント数：<%= book.book_comments.count %></p>
     </td>
     <td>
+
+      <p>閲覧数：<%= book.impressions_count %></p>
+    </td>
+
       <span id="star-rate-<%= book.id %>"></span>
       <script>
       $('#star-rate-<%= book.id %>').empty();
@@ -31,6 +35,7 @@
         });
       </script>
     </td>
+
 
     <% if current_user.id == book.user_id %>
       <td><%= link_to 'Edit', edit_book_path(book), class: "btn btn-sm btn-success edit_book_#{book.id}" %></td>
