@@ -1,0 +1,32 @@
+<div class = "row mx-auto ">
+  <h1 class = "title ">
+    <% @entries.each do |e| %>
+    <strong>
+      <%= e.user.name %>さん
+    </strong>
+    <% end %>
+    <string>のチャット</string>
+  </h1>
+</div>
+
+<div class='row'>
+  <div class='col-md-3'>
+    <div class="left-button">
+      <%= link_to "ユーザー一覧に戻る", users_path ,class:"edit-link" %>
+    </div>
+    <div class="posts">
+      <%= form_for @message do |f| %>
+        <%= f.text_field :message, placeholder: "メッセージを入力して下さい" , class:"form-text-field" %>
+        <%= f.hidden_field :room_id, value: @room.id %>
+        <%= f.submit "投稿",class: 'form-submit'%>
+      <% end %>
+    </div>
+  </div>
+  <div class='col-md-8'>
+    <% if @messages.present? %>
+      <% @messages.each do |m| %>
+         <div><%= m.message %></div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
